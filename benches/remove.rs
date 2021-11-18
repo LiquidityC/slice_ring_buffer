@@ -1,7 +1,7 @@
 #![feature(test)]
 #![cfg_attr(feature = "cargo-clippy", allow(option_unwrap_used))]
 
-extern crate slice_deque;
+extern crate slice_ring_buffer;
 extern crate test;
 
 use std::collections::VecDeque;
@@ -20,7 +20,8 @@ fn remove_front_vdeq(b: &mut test::Bencher) {
 
 #[bench]
 fn remove_front_sdeq(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     deq.resize(MAX_NO_ITERS, 3);
     b.iter(|| {
         test::black_box(deq.remove(0));
@@ -41,7 +42,8 @@ fn remove_back_vdeq(b: &mut test::Bencher) {
 
 #[bench]
 fn remove_back_sdeq(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     deq.resize(MAX_NO_ITERS, 3);
     b.iter(|| {
         let i = deq.len() - 1;
@@ -63,7 +65,8 @@ fn remove_mid_vdeq(b: &mut test::Bencher) {
 
 #[bench]
 fn remove_mid_sdeq(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     deq.resize(MAX_NO_ITERS, 3);
     b.iter(|| {
         let i = (deq.len() - 1) / 2;
@@ -85,7 +88,8 @@ fn remove_quarter_vdeq(b: &mut test::Bencher) {
 
 #[bench]
 fn remove_quarter_sdeq(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     deq.resize(MAX_NO_ITERS, 3);
     b.iter(|| {
         let i = (deq.len() - 1) / 4;
@@ -107,7 +111,8 @@ fn remove_three_quarter_vdeq(b: &mut test::Bencher) {
 
 #[bench]
 fn remove_three_quarter_sdeq(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     deq.resize(MAX_NO_ITERS, 3);
     b.iter(|| {
         let i = (deq.len() - 1) / 4 * 3;
