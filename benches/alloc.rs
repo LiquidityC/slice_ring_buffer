@@ -1,7 +1,7 @@
 //! Tests the memory allocation performance
 #![feature(test)]
 
-extern crate slice_deque;
+extern crate slice_ring_buffer;
 extern crate test;
 
 use std::collections::VecDeque;

@@ -1,6 +1,6 @@
 #![feature(test)]
 
-extern crate slice_deque;
+extern crate slice_ring_buffer;
 extern crate test;
 
 use std::collections::VecDeque;
@@ -19,8 +19,9 @@ fn iter_contiguous_std_vecdeque(b: &mut test::Bencher) {
 }
 
 #[bench]
-fn iter_contiguous_slice_deque(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_IDX);
+fn iter_contiguous_slice_ring_buffer(b: &mut test::Bencher) {
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_IDX);
     deq.resize(MAX_IDX, 3);
     b.iter(|| {
         deq.iter().for_each(|v| {
@@ -47,8 +48,9 @@ fn iter_chunked_std_vecdeque(b: &mut test::Bencher) {
 }
 
 #[bench]
-fn iter_chunked_slice_deque(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_IDX);
+fn iter_chunked_slice_ring_buffer(b: &mut test::Bencher) {
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_IDX);
     deq.resize(MAX_IDX, 3);
     for _ in 0..MAX_IDX / 2 {
         deq.pop_front();

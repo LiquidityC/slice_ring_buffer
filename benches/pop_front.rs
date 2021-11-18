@@ -1,7 +1,7 @@
 #![feature(test)]
 #![cfg_attr(feature = "cargo-clippy", allow(option_unwrap_used))]
 
-extern crate slice_deque;
+extern crate slice_ring_buffer;
 extern crate test;
 
 use std::collections::VecDeque;
@@ -18,8 +18,9 @@ fn pop_front_std_vecdeque(b: &mut test::Bencher) {
 }
 
 #[bench]
-fn pop_front_slice_deque(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+fn pop_front_slice_ring_buffer(b: &mut test::Bencher) {
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     deq.resize(MAX_NO_ITERS, 3);
     b.iter(|| {
         test::black_box(deq.pop_front().unwrap());
@@ -27,8 +28,9 @@ fn pop_front_slice_deque(b: &mut test::Bencher) {
 }
 
 #[bench]
-fn truncate_front_1_slice_deque(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+fn truncate_front_1_slice_ring_buffer(b: &mut test::Bencher) {
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     deq.resize(MAX_NO_ITERS, 3);
     b.iter(|| {
         let new_len = deq.len() - 1;
@@ -37,8 +39,9 @@ fn truncate_front_1_slice_deque(b: &mut test::Bencher) {
 }
 
 #[bench]
-fn truncate_front_100_slice_deque(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+fn truncate_front_100_slice_ring_buffer(b: &mut test::Bencher) {
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     deq.resize(MAX_NO_ITERS, 3);
     b.iter(|| {
         let new_len = deq.len() - 100;

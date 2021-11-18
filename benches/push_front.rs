@@ -1,6 +1,6 @@
 #![feature(test)]
 
-extern crate slice_deque;
+extern crate slice_ring_buffer;
 extern crate test;
 
 use std::collections::VecDeque;
@@ -17,8 +17,9 @@ fn push_front_std_vecdeque(b: &mut test::Bencher) {
 }
 
 #[bench]
-fn push_front_slice_deque(b: &mut test::Bencher) {
-    let mut deq = slice_deque::SliceDeque::<u8>::with_capacity(MAX_NO_ITERS);
+fn push_front_slice_ring_buffer(b: &mut test::Bencher) {
+    let mut deq =
+        slice_ring_buffer::SliceRingBuffer::<u8>::with_capacity(MAX_NO_ITERS);
     b.iter(|| {
         deq.push_front(3);
         test::black_box(&mut deq);
