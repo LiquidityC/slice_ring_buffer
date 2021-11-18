@@ -2,20 +2,20 @@
 # dev-dependencies which causes 
 [package]
 name = "slice-ring-buffer"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["Linus Probert <linus.probert@gmail.com>"]
 description = "A double-ended queue that Deref's into a slice."
 documentation = "https://docs.rs/crate/slice-ring-buffer/"
 homepage = "https://github.com/liquidityc/slice_ring_buffer"
 repository = "https://github.com/liquidityc/slice_ring_buffer"
-readme = "readme.md"
+readme = "README.md"
 keywords = ["collection", "deque", "ring", "circular", "buffer"]
 categories = ["data-structures", "no-std"]
 license = "MIT/Apache-2.0"
 edition = "2018"
 
 [badges]
-maintenance = { status = "passive" }
+maintenance = { status = "passively-maintained" }
 
 [target.'cfg(all(any(target_os = "macos", target_os = "ios"), not(feature = "unix_sysv")))'.dependencies.mach]
 version = "0.3"
