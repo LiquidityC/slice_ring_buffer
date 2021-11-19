@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
         toolchain: [stable, beta, nightly]
         target: [
           aarch64-unknown-linux-gnu,
@@ -47,6 +47,7 @@ jobs:
         ]
         include:
           - os: ubuntu-latest
+          - os: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Cache
