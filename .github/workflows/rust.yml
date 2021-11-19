@@ -56,20 +56,13 @@ jobs:
             ~/.cargo/git
             ~/.cargo/registry
             ~/.cargo/bin
-          key: ${{ matrix.os }}-${{ matrix.toolchain }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - name: Updating repository
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: sudo apt-get update
-      - name: Installing dependencies
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: sudo apt-get install libasound2-dev libspeechd-dev
+          key: ${{ matrix.os }}-${{ matrix.target }}-${{ matrix.toolchain }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Setup toolchain
         if: ${{ matrix.toolchain != 'nightly' }}
         uses: actions-rs/toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
           target: ${{ matrix.target }}
-          components: clippy, rustfmt
           override: true
       - name: Setup toolchain
         if: ${{ matrix.toolchain == 'nightly' }}
@@ -79,20 +72,17 @@ jobs:
           target: ${{ matrix.target }}
           profile: minimal
           override: true
-      - name: Formatting
-        if: ${{ matrix.toolchain != 'nightly' }}
-        run: cargo fmt -- --check
-      - name: Check (all features)
-        if: ${{ matrix.toolchain != 'nightly' }}
-        run: cargo check --locked --all-features
-      - name: Clippy (all features)
-        if: ${{ matrix.toolchain != 'nightly' }}
-        run: cargo clippy --locked --all-features
+      - name: Set ulimit
+        run: ulimit -Sn 4096
       - name: Test (all features)
+        env:
+          TARGET: ${{ matrix.target }}
         run: cargo test --locked --all-features
-      - name: Test release (all features)
-        run: cargo test --release --locked --all-features
       - name: Build
+        env:
+          TARGET: ${{ matrix.target }}
         run: cargo build --release --locked
       - name: Build (all features)
+        env:
+          TARGET: ${{ matrix.target }}
         run: cargo build --release --locked --all-features
