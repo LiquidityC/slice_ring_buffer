@@ -11,8 +11,8 @@
 
 ***This is a fork of [SliceDequeue](https://github.com/gnzlbg/slice_deque) that
 adds a security patch due to the original project no longer being maintained.
-Contributions are welcome but there will be no active development on the
-project by me.***
+I will keep the repo updated with security patches etc. But no active feature
+development will be done. Pull requests are welcome***
 
 ## Advantages
 
