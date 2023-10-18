@@ -17,8 +17,8 @@ edition = "2018"
 [badges]
 maintenance = { status = "passively-maintained" }
 
-[target.'cfg(all(any(target_os = "macos", target_os = "ios"), not(feature = "unix_sysv")))'.dependencies.mach]
-version = "0.3"
+[target.'cfg(all(any(target_os = "macos", target_os = "ios"), not(feature = "unix_sysv")))'.dependencies.mach2]
+version = "0.4.1"
 default-features = false
 
 [target.'cfg(target_os = "windows")'.dependencies.winapi]

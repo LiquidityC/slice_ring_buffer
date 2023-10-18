@@ -151,7 +151,7 @@ extern crate core;
     any(target_os = "macos", target_os = "ios"),
     not(feature = "unix_sysv")
 ))]
-extern crate mach;
+extern crate mach2;
 
 #[cfg(unix)]
 extern crate libc;

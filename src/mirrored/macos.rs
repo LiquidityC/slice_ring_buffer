@@ -4,7 +4,7 @@
 
 use super::mem;
 
-use mach;
+use mach2 as mach;
 use mach::boolean::boolean_t;
 use mach::kern_return::*;
 use mach::mach_types::mem_entry_name_port_t;
