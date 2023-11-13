@@ -19,7 +19,7 @@ dependencies = [
 
 [[package]]
 name = "slice-ring-buffer"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "libc",
  "mach2",

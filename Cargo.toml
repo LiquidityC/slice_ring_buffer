@@ -2,7 +2,7 @@
 # dev-dependencies which causes 
 [package]
 name = "slice-ring-buffer"
-version = "0.3.2"
+version = "0.3.3"
 authors = ["Linus Probert <linus.probert@gmail.com>"]
 description = "A double-ended queue that Deref's into a slice."
 documentation = "https://docs.rs/crate/slice-ring-buffer/"
