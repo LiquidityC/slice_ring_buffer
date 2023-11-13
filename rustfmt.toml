@@ -1,2 +1,2 @@
 max_width = 79
-fn_args_layout = "Compressed"
+fn_params_layout = "Compressed"
