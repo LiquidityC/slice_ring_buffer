@@ -4,7 +4,6 @@
 
 use super::mem;
 
-use mach;
 use mach::boolean::boolean_t;
 use mach::kern_return::*;
 use mach::mach_types::mem_entry_name_port_t;
@@ -20,6 +19,7 @@ use mach::vm_inherit::VM_INHERIT_NONE;
 use mach::vm_prot::{vm_prot_t, VM_PROT_READ, VM_PROT_WRITE};
 use mach::vm_statistics::{VM_FLAGS_ANYWHERE, VM_FLAGS_FIXED};
 use mach::vm_types::mach_vm_address_t;
+use mach2 as mach;
 
 use super::AllocError;
 
