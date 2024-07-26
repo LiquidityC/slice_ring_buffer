@@ -486,24 +486,18 @@ impl<T> SliceRingBuffer<T> {
     /// of the deque and the second one is empty.
     #[inline]
     pub fn as_slices(&self) -> (&[T], &[T]) {
-        unsafe {
-            let left = self.as_slice();
-            let right =
-                slice::from_raw_parts(usize::max_value() as *const _, 0);
-            (left, right)
-        }
+        let left = self.as_slice();
+        let right = &[];
+        (left, right)
     }
 
     /// Returns a pair of slices, where the first slice contains the contents
     /// of the deque and the second one is empty.
     #[inline]
     pub fn as_mut_slices(&mut self) -> (&mut [T], &mut [T]) {
-        unsafe {
-            let left = self.as_mut_slice();
-            let right =
-                slice::from_raw_parts_mut(usize::max_value() as *mut _, 0);
-            (left, right)
-        }
+        let left = self.as_mut_slice();
+        let right = &mut [];
+        (left, right)
     }
 
     /// Returns the slice of uninitialized memory between the `tail` and the
@@ -783,14 +777,17 @@ impl<T> SliceRingBuffer<T> {
     #[inline]
     unsafe fn append_elements(&mut self, other: *const [T]) {
         let count = (*other).len();
-        self.reserve(count);
-        let len = self.len();
-        ptr::copy_nonoverlapping(
-            other as *const T,
-            self.get_unchecked_mut(len),
-            count,
-        );
-        self.move_tail_unchecked(count as isize);
+        // Rust 1.78+: get_unchecked_mut() may panic in debug builds if we don't move the tail
+        if count > 0 {
+            self.reserve(count);
+            let len = self.len();
+            self.move_tail_unchecked(count as isize);
+            ptr::copy_nonoverlapping(
+                other as *const T,
+                self.get_unchecked_mut(len),
+                count,
+            );
+        }
     }
 
     /// Steal the elements from the slice `s`. You should `mem::forget` the
@@ -1717,10 +1714,10 @@ impl<T> SliceRingBuffer<T> {
             }
             debug_assert!(self.len() < self.capacity());
             unsafe {
-                ptr::write(self.get_unchecked_mut(len), element);
                 // NB can't overflow since we would have had to alloc the
                 // address space
                 self.move_tail_unchecked(1);
+                ptr::write(self.get_unchecked_mut(len), element);
             }
         }
     }
@@ -2580,8 +2577,8 @@ fn from_iter_default<T, I: Iterator<Item = T>>(
             let mut deque =
                 SliceRingBuffer::<T>::with_capacity(lower.saturating_add(1));
             unsafe {
-                ptr::write(deque.get_unchecked_mut(0), element);
                 deque.move_tail_unchecked(1);
+                ptr::write(deque.get_unchecked_mut(0), element);
             }
             deque
         }
