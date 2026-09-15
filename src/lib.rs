@@ -576,7 +576,8 @@ impl<T> SliceRingBuffer<T> {
                 return Ok(());
             }
 
-            let mut new_buffer = Buffer::uninitialized(2 * new_capacity)?;
+            let mirrored_len = new_capacity.checked_mul(2).expect("capacity overflow");
+            let mut new_buffer = Buffer::uninitialized(mirrored_len)?;
             debug_assert!(new_buffer.len() >= 2 * new_capacity);
 
             let len = self.len();
